@@ -2,11 +2,11 @@ variable "AWS_REGION" {
   default = "eu-west-1"
 }
 variable "PATH_TO_PUBLIC_KEY" {
-  default = "/home/vagrant/.ssh/devopsmonks.pub"
+  default = "~/.ssh/devopsmonks.pub"
 }
 
 variable "PATH_TO_PRIVATE_KEY" {
-  default = "/home/vagrant/.ssh/devopsmonks.pem"
+  default = "~/.ssh/devopsmonks.pem"
 }
 
 variable "AMIS" {
