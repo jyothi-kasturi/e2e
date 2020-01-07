@@ -1,5 +1,6 @@
 # Below resource will provision 
 resource "aws_instance" "example" {
+  count         = "${var.instance_count}"
   ami           = "${lookup(var.AMIS, var.AWS_REGION)}"
   instance_type = "t2.micro"
 
@@ -11,4 +12,9 @@ resource "aws_instance" "example" {
 
   # the public SSH key
   key_name = "${aws_key_pair.devopsmonks.key_name}"
+  #tags
+  tags = {
+    Name  = "Pub-${count.index + 1}"
+    Type = "e2e-hw"
+  }
 }

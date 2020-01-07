@@ -3,10 +3,7 @@ node {
        echo "In git checkout"
        git credentialsId: '1', url: 'https://github.com/jyothi-kasturi/e2e'
    }
-   stage("terraform"){
-       echo "In terraform"
-       sh 'ls'
-       sh 'pwd'
+   stage("terraform_create_ec2"){
        dir("terraform_ec2-instances_VPC") {
          sh 'pwd'
          def tfHome = tool name: 'terraform 0.12.2 linux', type: 'org.jenkinsci.plugins.terraform.TerraformInstallation'
@@ -15,7 +12,15 @@ node {
          sh 'terraform init'
          sh 'terraform plan -out=plan.out'
          sh 'terraform apply "plan.out"'
-          sh 'terraform destroy -auto-approve'
+       }
+   }
+    stage("terraform_destroy"){
+       dir("terraform_ec2-instances_VPC") {
+         sh 'pwd'
+         def tfHome = tool name: 'terraform 0.12.2 linux', type: 'org.jenkinsci.plugins.terraform.TerraformInstallation'
+         env.PATH = "${tfHome}:${env.PATH}"
+         sh 'terraform version'
+         sh 'terraform destroy -auto-approve'
        }
    }
 }
