@@ -12,7 +12,7 @@ node {
          def tfHome = tool name: 'terraform 0.12.2 linux', type: 'org.jenkinsci.plugins.terraform.TerraformInstallation'
          env.PATH = "${tfHome}:${env.PATH}"
          sh 'terraform version'
-         sh 'terraform destroy'
+         sh 'terraform destroy -auto-approve'
        }
    }
 }

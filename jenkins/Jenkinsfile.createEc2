@@ -15,7 +15,7 @@ node {
          sh 'terraform init'
          sh 'terraform plan -out=plan.out'
          sh 'terraform apply "plan.out"'
-          sh 'terraform destroy'
+          sh 'terraform destroy -auto-approve'
        }
    }
 }
