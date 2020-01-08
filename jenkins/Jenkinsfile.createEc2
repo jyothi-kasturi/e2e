@@ -23,7 +23,7 @@ node {
    }
     stage("ansible_ping"){
          sh 'pwd'
-         sh 'ansible -i ansible/ec2.py ec2 -m ping'
+         sh 'ansible -i ./ansible/ec2.py ec2 -m ping'
    }
    stage("install_nginx"){
          sh 'pwd'
