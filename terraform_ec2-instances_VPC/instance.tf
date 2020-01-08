@@ -9,6 +9,8 @@ resource "aws_instance" "example" {
 
   # the security group
   vpc_security_group_ids = ["${aws_security_group.allow-ssh.id}"]
+  #userdata
+  user_data= "../scripts/create_jenkins_usr.sh"
 
   # the public SSH key
   key_name = "${aws_key_pair.devopsmonks.key_name}"
