@@ -14,7 +14,23 @@ node {
          sh 'terraform apply "plan.out"'
        }
    }
-    stage("terraform_destroy"){
+   stage("copy_ssh2ec2"){
+         sh 'pwd'
+         sh 'ssh-copy-id jenkins@34.244.97.104'
+         sh 'ssh-copy-id jenkins@34.248.142.17'
+         sh 'ansible -i ./ansible/ec2.py ec2 -m ping'
+       
+   }
+    stage("ansible_ping"){
+         sh 'pwd'
+         sh 'ansible -i ansible/ec2.py ec2 -m ping'
+   }
+   stage("install_nginx"){
+         sh 'pwd'
+         sh 'ansible-playbook -i inventory.cfg nginx_install.yml'
+        ansiblePlaybook inventory: './ansible/ec2.py ec2', playbook: 'ansible/nginx_install.yml'
+   }
+    /*stage("terraform_destroy"){
        dir("terraform_ec2-instances_VPC") {
          sh 'pwd'
          def tfHome = tool name: 'terraform 0.12.2 linux', type: 'org.jenkinsci.plugins.terraform.TerraformInstallation'
@@ -22,5 +38,5 @@ node {
          sh 'terraform version'
          sh 'terraform destroy -auto-approve'
        }
-   }
+   }*/
 }
